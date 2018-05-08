@@ -1,14 +1,15 @@
 {
-  "name": "my-cli",
-  "version": "1.0.0",
-  "description": "cli test",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "ora": "^2.1.0"
-  }
+    "name": "my-cli",
+    "version": "1.0.0",
+    "description": "cli test",
+    "main": "index.js",
+    "bin": "bin/my-cli",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "ora": "^2.1.0"
+    }
 }
