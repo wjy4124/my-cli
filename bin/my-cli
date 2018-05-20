@@ -1,11 +1,62 @@
-
+#! /usr/bin/env node
 
 let ora = require('ora');
+let inquirer = require('inquirer');
+let glob = require('glob');
+let chalk = require('chalk');
+let fn = require('../index');
+let log = console.log;
+let program = require('commander');
 
-let spaner = ora("loading for 3s");
+let howManyFolders = (all)=>{
+    inquirer.prompt([{
+        type: 'input',
+        name: 'folders',
+        message: 'How many folders?',
+        validate(v){
+            return parseInt(v)?true:'need a number';
+        }
+    }]).then(answers=> {
+        glob('*/',{
+            dot:all
+        }, (err,files)=> {
+            let len = files.length;
+            let result = '';
+            if(answers.folders == len){
+                result = chalk.green('you are right is :'+len);
+            }else{
+                result = chalk.red('you are wrong the true is :' + len);
+            }
+            log(result);
+            log(chalk.white('Bye bye!'));
+        });
+    });
+}
+let addFolder = ()=>{
+    inquirer.prompt([{
+        type: 'list',
+        name: 'folderName',
+        default: 0,
+        choices: ['a', 'b', 'c'],
+        message:'selec a name'
+    }]).then(answers=>{
+        log(chalk.green(answers.folderName));
+    });
+}
 
-spaner.start();
+program
+    .version('1.0.0')
 
-setTimeout(e=> {
-  spaner.stop();
-}, 3000);
+program
+    .command('question')
+    .option('-a, --all', 'add hidden folders')
+    .action((cmd)=>{
+        howManyFolders(cmd.all);
+    })
+program
+    .command('add')
+    .action((cmd)=>{
+        addFolder();
+    })
+
+program.parse(process.argv);
